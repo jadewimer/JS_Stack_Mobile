@@ -16,6 +16,25 @@
      height: 100%;
      width: 100%;
     }
+
+      .addRecordBtn {
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    right: 10px;
+    background-color: #0079c1;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .addRecordBtn:hover {
+    background-color: #005a87;
+}
    </style>
 
    <!-- //importing css and libraries for esri.js -->
@@ -24,7 +43,7 @@
 
    <!-- //loading modules -->
    <script>
-    require([ "esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/layers/FeatureLayer" ], (esriConfig, Map, MapView, Locate, FeatureLayer) => {
+    require([ "esri/config", "esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/widgets/Search", "esri/layers/FeatureLayer" ], (esriConfig, Map, MapView, Locate, Search, FeatureLayer) => {
     
         esriConfig.apiKey = "AAPK7dfcbf9c0a344ba1a58a103acdc84108GgGvH8L6uR7TEt-M_uspUnOsHFImRuBKc5m8FYrP2pn78cDrC8BSLqylEqbayXJ9";
 
@@ -33,7 +52,9 @@
 });
         const view = new MapView({
             container: "viewDiv", // Reference to the DOM node that will contain the view
-            map: map // References the map object
+            map: map, // References the map object
+            zoom: 1, // setting zoom to see whole world
+            center: [0, 0] // longitude, latitude of the center of the view
         });
 
         const locateBtn = new Locate({
@@ -53,14 +74,20 @@
         view.ui.add(locateBtn, {
           position: "top-left"
         });
-        
 
-    });
+        var search = new Search({
+    view: view
+  });
+
+  view.ui.add(search, "bottom-right");
+});
 
     </script> 
 
   </head>
   <body>
+    <a href="https://arcg.is/0jDKvi0"target="_blank" class="addRecordBtn">Add Record</a>
+
     <div id="viewDiv"></div>
   </body>
 </html>
